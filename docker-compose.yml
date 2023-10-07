@@ -1,0 +1,62 @@
+version: '3'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./docker/backend/Dockerfile
+        container_name: app_campus
+        restart: unless-stopped
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        working_dir: /var/www/safe_campus
+        volumes:
+            - '.:/var/www/safe_campus'
+        depends_on:
+            - database
+        networks:
+            - my_network
+
+    python:
+        restart: unless-stopped
+        container_name: python_campus
+        build:
+            context: .
+            dockerfile: ./docker/python/Dockerfile
+        ports:
+            - "5000:5000"
+        working_dir: /python
+        volumes:
+            - './AI:/python'
+        networks:
+            - my_network
+        command: [ "python", "app.py", "gunicorn app:app --workers 4 --threads 2"]
+
+    nginx:
+        container_name: server_campus
+        image: 'nginx:alpine'
+        restart: unless-stopped
+        ports:
+            - '80:80'
+        volumes:
+            - '.:/var/www/safe_campus'
+            - './docker/nginx/conf.d/:/etc/nginx/conf.d/'
+        depends_on:
+            - app
+        networks:
+            - my_network
+
+    database:
+        container_name: db_campus
+        image: 'postgres:14.5'
+        environment:
+            - 'POSTGRES_DB=${DB_DATABASE}'
+            - 'POSTGRES_USER=${DB_USERNAME}'
+            - 'POSTGRES_PASSWORD=${DB_PASSWORD}'
+        ports:
+            - '${DB_PORT}:5432'
+
+
+networks:
+    my_network:
+        driver: bridge
+        name: my_network

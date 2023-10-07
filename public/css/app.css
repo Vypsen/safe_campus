@@ -1,0 +1,39 @@
+.map {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.school {
+    height: 100px;
+    width: 100px;
+}
+
+.school_btn {
+    border-radius: 10px;
+    opacity: 0.6;
+    background-color: gray;
+
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
+.school_btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+.school_btn img {
+    width: 80%;
+    height: 80%;
+}
+.school span {
+    height: 30px;
+    min-width: 100px;
+    border-radius: 10px;
+    opacity: 0;
+    color: #333333;
+    transition: all 0.2s ease-out;
+    display: inline-block !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
