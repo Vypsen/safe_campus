@@ -1,1 +1,0 @@
-Flask opencv-python pylibjpeg-libjpeg pydicom flask-cors tensorflow scikit-image scikit-learn pandas gunicorn

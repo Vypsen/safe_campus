@@ -10,6 +10,7 @@
 .school {
     height: 100px;
     width: 100px;
+    z-index: 0;
 }
 
 .school_btn {
@@ -38,4 +39,8 @@
     display: inline-block !important;
     text-align: center;
     vertical-align: middle;
+}
+
+#collapseSearch{
+    width: 55%;
 }

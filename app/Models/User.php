@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @method static \Database\Factories\UserFactory<self> factory($count = null, $state = [])
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;

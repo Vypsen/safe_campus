@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', \App\Http\Controllers\SearchController::class . "@indexScore")
+    ->name('score');
 
-Route::get('/', function () {
-    return view('map');
+//Route::get('/', function () {
+//
+//    return view('map');
 //    return \Illuminate\Support\Facades\DB::select('SELECT * FROM customers');
-});
+//});
