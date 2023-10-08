@@ -24,8 +24,8 @@
 @media screen and (max-width: 1399px){
 
     .school {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
 
     .school span {
@@ -43,12 +43,12 @@
 
 @media screen and (min-width: 1400px){
     .school {
-        height: 100px;
-        width: 100px;
+        height: 80px;
+        width: 80px;
     }
     .school span {
         height: 30px;
-        min-width: 100px;
+        min-width: 80px;
         border-radius: 10px;
         opacity: 0;
         color: #333333;

@@ -212,11 +212,11 @@
                         <input type="text" class="form-control" name="token_vk" id="" placeholder="Токен ВК">
                         <div class="d-flex mt-2">
                             <div class="col-lg-10">
-                                <input type="text" class="form-control col-xl-9" name="source" id=""
+                                <input type="text" class="form-control col-xl-9" name="source" id="token"
                                        placeholder="Ссылка на сообщество">
                             </div>
                             <div class="col-lg-2 ps-3">
-                                <button type="submit" class="btn btn-success form-control">
+                                <button type="button" class="btn btn-success set-ds-btn form-control">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                             </div>
@@ -227,21 +227,22 @@
         </div>
     </div>
 
-    @foreach($schools as $school)
+    @foreach($schools as $key => $school)
+
         <div id="{{$school}}" class="school z-2  position-absolute" style="">
             <div class="d-flex school_btn w-100 h-100 justify-content-center align-content-center">
                 <img class="my-auto py-1" src="" alt="">
             </div>
             <span class="caption_school d-flex mt-xxl-1 text-center mx-auto fw-bold fs-4" style=""></span>
         </div>
-
-{{--        <img src="" class="school_img_red z-1 position-absolute" style="opacity: {{$opacity}};">--}}
-{{--        <img src="" class="school_img_yel z-1 position-absolute" style="opacity: {{1-$opacity}};">--}}
+        @if(isset($opacity[0]->share))
+            <img src="" class="school_img_red z-1 position-absolute" style="opacity: {{$opacity[$key]->share}};">
+            <img src="" class="school_img_yel z-1 position-absolute" style="opacity: {{1-$opacity[$key]->share}}">
+        @endif
     @endforeach
 
-    <div class="top-0 start-0 z-3 w-100 position-absolute school-info-block d-none" style="padding: 15px">
+    <div class="top-0 h-100 start-0 z-3 w-100 position-absolute school-info-block d-none" style="padding: 15px">
         <div class="card h-100">
-            <div class=""></div>
             <div class="position-absolute top-0 end-0 m-3">
                 <i class="fa-solid fa-xmark fs-3" style="cursor: pointer;"></i>
             </div>
@@ -250,8 +251,8 @@
                 <div class="spinner-border " role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <canvas id="bar-chart" style="max-width: 800px; max-height: 450px" width="800" height="450"></canvas>
-
+                <canvas class="position-absolute start-0" id="pie-chart"
+                        style="top:100px; max-width: 600px; max-height: 600px" width="800" height="450"></canvas>
             </div>
         </div>
     </div>
@@ -259,29 +260,7 @@
     <script>
         $(document).ready(function () {
 
-            $('#parser').submit(function () {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: 'getSchoolInfo',
-                    method: "GET",
-                    data: {school: $(this).attr('id') },
-                    // cache: false,
-                    // contentType: false,
-                    // processData: false
-                })
-                    .done(function (data) {
-                        $('.title_school').text(data);
-                        // $('.school-graf').load(location.href + ' .school-graf');
-                        $('.title_school').removeClass('d-none');
-                        $('.spinner-border').addClass('d-none')
-                        $('.school-graf').removeClass('d-none');
-                    });
-            });
-
-
-            corpuses = ['IMCT','SE', 'IHTAM','PI','SAH', 'SEM','IWO','SMLS','TOISRIS','SL','AES'];
+            corpuses = ['IMCT', 'SE', 'IHTAM', 'PI', 'SAH', 'SEM', 'IWO', 'SMLS', 'TOISRIS', 'SL', 'AES'];
             corpuses_ru = {
                 'IMCT': ['ИМКТ'],
                 'SE': ["ШП"],
@@ -335,13 +314,13 @@
             count = 0
 
             $('.school_img_yel').each(function () {
-                console.log(corpuses[count] + '_RED' +  '.png')
+                console.log(corpuses[count] + '_RED' + '.png')
                 $(this).css('left', String(dots_img[corpuses[count]][0]) + '%');
                 $(this).css('top', String(dots_img[corpuses[count]][1]) + '%');
-                $(this).attr('src', 'storage/' + corpuses[count] + '_YEL' +  '.png');
+                $(this).attr('src', 'storage/' + corpuses[count] + '_YEL' + '.png');
                 $(this).prev().css('left', String(dots_img[corpuses[count]][0]) + '%');
                 $(this).prev().css('top', String(dots_img[corpuses[count]][1]) + '%');
-                $(this).prev().attr('src', 'storage/' + corpuses[count] + '_RED' +  '.png');
+                $(this).prev().attr('src', 'storage/' + corpuses[count] + '_RED' + '.png');
 
                 count += 1
             })
@@ -349,27 +328,50 @@
             $('.school').click(function () {
                 $('.title_school').addClass('d-none')
                 $('.spinner-border').removeClass('d-none')
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: 'getSchoolInfo',
-                method: "GET",
-                data: {school: $(this).attr('id') },
-                // cache: false,
-                // contentType: false,
-                // processData: false
-            })
-                .done(function (data) {
-                    $('.title_school').text(data);
-                    // $('.school-graf').load(location.href + ' .school-graf');
-                    $('.title_school').removeClass('d-none');
-                    $('.spinner-border').addClass('d-none')
-                    $('.school-graf').removeClass('d-none');
-                });
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: 'getSchoolInfo',
+                    method: "GET",
+                    data: {school: $(this).attr('id')},
+                    // cache: false,
+                    // contentType: false,
+                    // processData: false
+                })
+                    .done(function (data) {
+                        $('.title_school').text(data[0]);
+                        // $('.school-graf').load(location.href + ' .school-graf');
+                        $('.title_school').removeClass('d-none');
+                        $('.spinner-border').addClass('d-none')
+                        $('.school-graf').removeClass('d-none');
+
+                        const names = [];
+                        const ages = [];
+
+                        data = data[1]
+                        console.log(data)
+
+                        for (let i = 0; i < data.length; i++) {
+                            const item = data[i];
+                            console.log(item)
+                            names.push(item.count_n);
+                            ages.push(item.label);
+                        }
+                        console.log(names)
+                        console.log(ages)
+                        new Chart(document.getElementById("pie-chart"), {
+                            type: 'pie',
+                            data: {
+                                labels: ages,
+                                datasets: [{
+                                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+                                    data: names
+                                }]
+                            },
+                        });
+                    });
             });
-
-
 
             $(".school_btn").hover(function () {
                 $(this).parent().find('.caption_school').first().css("opacity", 1);
@@ -401,7 +403,29 @@
             $('.fa-xmark').click(function () {
                 $('.title_school').text('');
                 $('.school-info-block').addClass('d-none');
+                new Chart(document.getElementById("pie-chart"), {
+                    type: 'pie',
+                    data: {},
+                });
                 // $('.school-graf').load(location.href + ' .school-graf');
+            })
+
+            $('.set-ds-btn').click(function () {
+                data = $('.token').val();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: 'http://localhost:5000',
+                    method: "POST",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                })
+                    .done(function (data) {
+                       console.log(data)
+                    });
             })
         })
     </script>

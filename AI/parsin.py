@@ -7,10 +7,13 @@ from psycopg2 import sql
 from contextlib import closing
 from datetime import datetime
 from tqdm import tqdm
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-
+app = Flask(__name__)
+CORS(app)
 
 
 def url_group_to_id(url, token):
@@ -214,8 +217,12 @@ token = 'vk1.a.SG_JqUen6ITU-aOkBnBpDuKWeuoAPaD65rtzukLCEborVAL_In2_lkzP6p7o8_qt_
 DOMAIN =  'overhearfefu'
 count_post = 1
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['POST'])
 def index():
+    if request.args.get('data'):
+        DOMAIN = request.args.get('data')
+    else: DOMAIN =  'overhearfefu'
+
     join_and_parsing(token, DOMAIN, count_post)
 
 
