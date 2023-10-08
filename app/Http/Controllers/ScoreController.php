@@ -15,18 +15,16 @@ class ScoreController extends Controller
         $sources = Score::query()->pluck('source')->unique();
         $schools = Comment::query()->pluck('school')->unique()->toArray();
 
-        $from = $data['from'] ? : '2000.01.01';
-        $to = $data['to'] ? : '9999.12.31';
-        $class = $data['class'] ? : '';
+        $from = array_key_exists('from', $data) ? $data['from'] : '2000.01.01';
+        $to =  array_key_exists('to', $data) ? $data['to'] : '9999.12.31';
+        $class = array_key_exists('class', $data) ? $data['class'] : '';
+        $model = array_key_exists('model', $data) ? $data['model'] : '';
 
-        $scorse = DB::select("select * from main_fun('model_nagative', '2021-01-01', '9999-09-01' )
-        where label1 = ". $class .";");
-
-        return $scorse;
-
+        $opacity = DB::select("select share, school from main_fun2('$model', '$from', '$to' )
+        where label1 = '". $class ."' and school!='NaN';");
 
         array_shift($schools);
-//        return $schools;
+
         return view('map', ['sources' => $sources, 'schools' => $schools, 'opacity' => $opacity]);
     }
 

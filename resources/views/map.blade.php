@@ -235,8 +235,8 @@
             <span class="caption_school d-flex mt-xxl-1 text-center mx-auto fw-bold fs-4" style=""></span>
         </div>
 
-        <img src="" class="school_img_red z-1 position-absolute" style="opacity: {{$opacity}};">
-        <img src="" class="school_img_yel z-1 position-absolute" style="opacity: {{1-$opacity}};">
+{{--        <img src="" class="school_img_red z-1 position-absolute" style="opacity: {{$opacity}};">--}}
+{{--        <img src="" class="school_img_yel z-1 position-absolute" style="opacity: {{1-$opacity}};">--}}
     @endforeach
 
     <div class="top-0 start-0 z-3 w-100 position-absolute school-info-block d-none" style="padding: 15px">
@@ -279,28 +279,7 @@
                         $('.school-graf').removeClass('d-none');
                     });
             });
-            })
 
-            new Chart(document.getElementById("bar-chart"), {
-                type: 'bar',
-                data: {
-                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-                    datasets: [
-                        {
-                            label: "Population (millions)",
-                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                            data: [2478,5267,734,784,433]
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: false },
-                    title: {
-                        display: true,
-                        text: 'Predicted world population (millions) in 2050'
-                    }
-                }
-            });
 
             corpuses = ['IMCT','SE', 'IHTAM','PI','SAH', 'SEM','IWO','SMLS','TOISRIS','SL','AES'];
             corpuses_ru = {
