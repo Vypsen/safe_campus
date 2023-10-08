@@ -19,6 +19,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+
 </head>
 <body style="height: 100vh">
 <main class="h-100" id="">
@@ -28,6 +29,7 @@
 {{--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"--}}
 {{--        crossorigin="anonymous"></script>--}}
 <script src="https://kit.fontawesome.com/d76290626c.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 </body>
 </html>

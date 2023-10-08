@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', \App\Http\Controllers\SearchController::class . "@indexScore")
+Route::get('/', \App\Http\Controllers\ScoreController::class . "@indexScore")
     ->name('score');
+
+Route::get('/getSchoolInfo', \App\Http\Controllers\ScoreController::class . "@getSchoolInfo")
+    ->name('schoolInfo');
 
 //Route::get('/', function () {
 //

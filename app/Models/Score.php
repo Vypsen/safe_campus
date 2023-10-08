@@ -16,4 +16,11 @@ use Illuminate\Database\Eloquent\Model;
 class Score extends Model
 {
     protected $table = 'score_table';
+
+
+    //for each img in imgs_red
+    //  img.setOpacity(*полученный с запроса процент*)
+
+    //for each img in imgs_yellow
+    //  img.setOpacity(1 - *полученный с запроса процент*)
 }
