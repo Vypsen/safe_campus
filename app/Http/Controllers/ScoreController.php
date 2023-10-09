@@ -37,9 +37,11 @@ class ScoreController extends Controller
         $class = !empty($data['class']) ? $data['class'] : 'negative';
         $model =  !empty($data['model']) ? $data['model'] : 'negative_model';
         $school = $request->all()['school'];
-        $graf = DB::select("select * from main_fun3('$model', '$school')");
+        $graf1 = DB::select("select * from main_fun3('$model', '$school')");
+        $graf2 = DB::select("select * from main_fun3('$model', '$school')");
+
 
         $ru_school = Comment::query()->where('school', $request->all()['school'])->get('ru_school')->first();
-        return [$ru_school['ru_school'], $graf] ;
+        return [$ru_school['ru_school'], $graf1] ;
     }
 }

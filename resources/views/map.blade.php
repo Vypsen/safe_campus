@@ -231,11 +231,11 @@
 
         <div id="{{$school}}" class="school z-2  position-absolute" style="">
             <div class="d-flex school_btn w-100 h-100 justify-content-center align-content-center">
-                <img class="my-auto py-1" src="" alt="">
+                <img class="h-100 w-100 my-auto p-2" src="" alt="">
             </div>
             <span class="caption_school d-flex mt-xxl-1 text-center mx-auto fw-bold fs-4" style=""></span>
         </div>
-        @if(isset($opacity[0]->share))
+        @if(isset($opacity[$key]->share))
             <img src="" class="school_img_red z-1 position-absolute" style="opacity: {{$opacity[$key]->share}};">
             <img src="" class="school_img_yel z-1 position-absolute" style="opacity: {{1-$opacity[$key]->share}}">
         @endif
@@ -251,8 +251,15 @@
                 <div class="spinner-border " role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <canvas class="position-absolute start-0" id="pie-chart"
+                <div class="d-flex">
+                    
+                <canvas class="position-absolute start-0 col-xl-4" id="pie-chart"
                         style="top:100px; max-width: 600px; max-height: 600px" width="800" height="450"></canvas>
+
+                        <canvas class="position-absolute col-xl-4 end-0" style="top:100px; max-width: 600px; max-height: 600px" id="bar-chart" width="800" height="450"></canvas>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -316,10 +323,10 @@
             $('.school_img_yel').each(function () {
                 console.log(corpuses[count] + '_RED' + '.png')
                 $(this).css('left', String(dots_img[corpuses[count]][0]) + '%');
-                $(this).css('top', String(dots_img[corpuses[count]][1]) + '%');
+                $(this).css('top', String(dots_img[corpuses[count]][1]-5) + '%');
                 $(this).attr('src', 'storage/' + corpuses[count] + '_YEL' + '.png');
                 $(this).prev().css('left', String(dots_img[corpuses[count]][0]) + '%');
-                $(this).prev().css('top', String(dots_img[corpuses[count]][1]) + '%');
+                $(this).prev().css('top', String(dots_img[corpuses[count]][1]-5) + '%');
                 $(this).prev().attr('src', 'storage/' + corpuses[count] + '_RED' + '.png');
 
                 count += 1
@@ -370,6 +377,25 @@
                                 }]
                             },
                         });
+
+                        new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                                labels: ages,
+                                datasets: [{
+                                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+                                    data: names
+                                }]
+                            },
+                            options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'По настроению'
+      }
+    }
+                        });
+                        
                     });
             });
 
@@ -404,6 +430,10 @@
                 $('.title_school').text('');
                 $('.school-info-block').addClass('d-none');
                 new Chart(document.getElementById("pie-chart"), {
+                    type: 'pie',
+                    data: {},
+                });
+                new Chart(document.getElementById("bar-chart"), {
                     type: 'pie',
                     data: {},
                 });
