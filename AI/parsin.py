@@ -213,7 +213,7 @@ def join_and_parsing(token, DOMAIN, count_post):
 
 # переменные
 # переменные
-token = 'vk1.a.SG_JqUen6ITU-aOkBnBpDuKWeuoAPaD65rtzukLCEborVAL_In2_lkzP6p7o8_qt_svC4337JZR-9a8rr8DazzBp0cVOHJxe35ymqLlq3wfH2ntq98NqRK4FKg67cqGmhJXfzK4c-4_E3276fzmVYB-OE2GhqAsd5Es2g_XKwUpnGYy87I5mmJlWR3O-TsA4twsQ6WiBkVnAGcEisCNNAg'
+token = ''
 DOMAIN =  'overhearfefu'
 count_post = 1
 
